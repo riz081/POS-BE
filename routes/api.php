@@ -63,3 +63,6 @@ Route::get('/get-printers-by-outlet/{outlet_id}', [App\Http\Controllers\Api\Prin
 //business settings
 Route::post('/add-business-setting', [App\Http\Controllers\Api\BusinessSettingController::class, 'addBusinessSetting'])->middleware('auth:sanctum');
 Route::get('/get-business-settings-by-business/{business_id}', [App\Http\Controllers\Api\BusinessSettingController::class, 'getBusinessSettingsByBusiness'])->middleware('auth:sanctum');
+
+//sales report
+Route::post('/get-daily-sales-report', [App\Http\Controllers\Api\SalesReportController::class, 'getDailySalesReport'])->middleware('auth:sanctum');
