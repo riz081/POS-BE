@@ -42,4 +42,38 @@ class BusinessSettingController extends Controller
             'data' => $businessSettings,
         ]);
     }
+
+    //update business setting
+    public function updateBusinessSetting(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'charge_type' => 'required|string',
+            'type' => 'required|string',
+            'value' => 'required|string',
+        ]);
+
+        $businessSetting = BusinessSetting::find($id);
+        $businessSetting->name = $request->name;
+        $businessSetting->charge_type = $request->charge_type;
+        $businessSetting->type = $request->type;
+        $businessSetting->value = $request->value;
+        $businessSetting->save();
+
+        return response()->json([
+            'message' => 'Business setting updated successfully',
+            'data' => $businessSetting,
+        ]);
+    }
+
+    //delete business setting
+    public function deleteBusinessSetting($id)
+    {
+        $businessSetting = BusinessSetting::find($id);
+        $businessSetting->delete();
+
+        return response()->json([
+            'message' => 'Business setting deleted successfully',
+        ]);
+    }
 }

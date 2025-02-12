@@ -47,4 +47,30 @@ class StaffController extends Controller
             'data' => $staff,
         ]);
     }
+
+    //edit role staff
+    public function editStaff(Request $request, $id)
+    {
+        $request->validate([
+            'role_id' => 'required|integer',
+            'name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $user = User::find($id);
+        $user->role_id = $request->role_id;
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Role updated successfully',
+            'data' => $user,
+        ]);
+    }
 }

@@ -23,6 +23,8 @@ Route::post('/add-manager', [App\Http\Controllers\Api\AuthController::class, 'ad
 Route::get('/get-staff/{businessId}', [App\Http\Controllers\Api\StaffController::class, 'getStaff'])->middleware('auth:sanctum');
 //add staff
 Route::post('/add-staff', [App\Http\Controllers\Api\StaffController::class, 'addStaff'])->middleware('auth:sanctum');
+//edit staff
+Route::put('/edit-staff/{id}', [App\Http\Controllers\Api\StaffController::class, 'editStaff'])->middleware('auth:sanctum');
 
 //outlets
 Route::post('/add-outlet', [App\Http\Controllers\Api\OutletController::class, 'addOutlet'])->middleware('auth:sanctum');
@@ -59,10 +61,14 @@ Route::get('/get-orders-by-outlet/{id}', [App\Http\Controllers\Api\OrderControll
 //printers
 Route::post('/add-printer', [App\Http\Controllers\Api\PrinterController::class, 'addPrinter'])->middleware('auth:sanctum');
 Route::get('/get-printers-by-outlet/{outlet_id}', [App\Http\Controllers\Api\PrinterController::class, 'getPrintersByOutlet'])->middleware('auth:sanctum');
+Route::delete('/delete-printer/{id}', [App\Http\Controllers\Api\PrinterController::class, 'deletePrinter'])->middleware('auth:sanctum');
 
 //business settings
 Route::post('/add-business-setting', [App\Http\Controllers\Api\BusinessSettingController::class, 'addBusinessSetting'])->middleware('auth:sanctum');
 Route::get('/get-business-settings-by-business/{business_id}', [App\Http\Controllers\Api\BusinessSettingController::class, 'getBusinessSettingsByBusiness'])->middleware('auth:sanctum');
+Route::put('/update-business-setting/{id}', [App\Http\Controllers\Api\BusinessSettingController::class, 'updateBusinessSetting'])->middleware('auth:sanctum');
+//delete
+Route::delete('/delete-business-setting/{id}', [App\Http\Controllers\Api\BusinessSettingController::class, 'deleteBusinessSetting'])->middleware('auth:sanctum');
 
 //sales report
 Route::post('/get-daily-sales-report', [App\Http\Controllers\Api\SalesReportController::class, 'getDailySalesReport'])->middleware('auth:sanctum');

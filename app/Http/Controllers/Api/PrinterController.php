@@ -16,6 +16,7 @@ class PrinterController extends Controller
             'connection_type' => 'required|string',
             'paper_width' => 'required|integer',
             'outlet_id' => 'required|integer',
+            'default' => 'required|boolean',
         ]);
 
         $printer = Printer::create([
@@ -25,6 +26,7 @@ class PrinterController extends Controller
             'outlet_id' => $request->outlet_id,
             'mac_address' => $request->mac_address,
             'ip_address' => $request->ip_address,
+            'default' => $request->default,
         ]);
 
         return response()->json([
@@ -42,4 +44,16 @@ class PrinterController extends Controller
             'data' => $printers,
         ]);
     }
+
+    //delete printer
+    public function deletePrinter($id)
+    {
+        $printer = Printer::find($id);
+        $printer->delete();
+
+        return response()->json([
+            'message' => 'Printer deleted successfully',
+        ]);
+    }
+
 }
