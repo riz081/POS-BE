@@ -38,6 +38,7 @@ Route::get('/get-categories', [App\Http\Controllers\Api\CategoryController::clas
 //products
 Route::post('/add-product', [App\Http\Controllers\Api\ProductController::class, 'addProduct'])->middleware('auth:sanctum');
 Route::put('/update-product/{id}', [App\Http\Controllers\Api\ProductController::class, 'updateProduct'])->middleware('auth:sanctum');
+Route::post('/update-product-with-image/{id}', [App\Http\Controllers\Api\ProductController::class, 'updateProductWithImage'])->middleware('auth:sanctum');
 Route::get('/get-products', [App\Http\Controllers\Api\ProductController::class, 'getProducts'])->middleware('auth:sanctum');
 Route::get('/get-product/{id}', [App\Http\Controllers\Api\ProductController::class, 'getProduct'])->middleware('auth:sanctum');
 Route::delete('/delete-product/{id}', [App\Http\Controllers\Api\ProductController::class, 'deleteProduct'])->middleware('auth:sanctum');

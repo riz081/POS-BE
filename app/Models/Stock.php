@@ -22,4 +22,9 @@ class Stock extends Model
     {
         return $this->belongsTo(Outlet::class);
     }
+
+    public function stockHistories()
+    {
+        return $this->hasMany(StockHistory::class);
+    }
 }

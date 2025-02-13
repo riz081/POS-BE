@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\StockHistory;
 
 class OrderController extends Controller
 {
@@ -59,14 +60,23 @@ class OrderController extends Controller
 
         //update stock
         foreach ($request->items as $item) {
-            $product = Product::find($item['product_id']);
-            $product->stock = $product->stock - $item['quantity'];
-            $product->save();
+            //stock where product_id and outlet_id
+            $stock = Stock::where('product_id', $item['product_id'])
+                ->where('outlet_id', $request->outlet_id)
+                ->first();
+                $stock->quantity -= $item['quantity'];
+                $stock->save();
 
-            //update table stock
-            // $stock = Stock::where('product_id', $item['product_id'])->where('outlet_id', $request->outlet_id)->first();
-            // $stock->stock = $stock->stock - $item['quantity'];
-            // $stock->save();
+            //create stock history
+            StockHistory::create([
+                'stock_id' => $stock->id,
+                'quantity' => $item['quantity'],
+                'current_stock' => $stock->quantity,
+                'type' => 'deduct',
+                'reference' => $order->order_number,
+                'user' => $request->user()->name,
+                'note' => 'Order #' . $order->order_number,
+            ]);
         }
 
         return response()->json([
