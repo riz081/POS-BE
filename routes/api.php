@@ -34,6 +34,7 @@ Route::get('/get-outlets/{businessId}', [App\Http\Controllers\Api\OutletControll
 //categories
 Route::post('/add-category', [App\Http\Controllers\Api\CategoryController::class, 'addCategory'])->middleware('auth:sanctum');
 Route::get('/get-categories', [App\Http\Controllers\Api\CategoryController::class, 'getCategories'])->middleware('auth:sanctum');
+Route::put('/update-category/{id}', [App\Http\Controllers\Api\CategoryController::class, 'updateCategory'])->middleware('auth:sanctum');
 
 //products
 Route::post('/add-product', [App\Http\Controllers\Api\ProductController::class, 'addProduct'])->middleware('auth:sanctum');

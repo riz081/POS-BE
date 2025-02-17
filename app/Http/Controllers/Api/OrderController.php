@@ -64,8 +64,8 @@ class OrderController extends Controller
             $stock = Stock::where('product_id', $item['product_id'])
                 ->where('outlet_id', $request->outlet_id)
                 ->first();
-                $stock->quantity -= $item['quantity'];
-                $stock->save();
+            $stock->quantity -= $item['quantity'];
+            $stock->save();
 
             //create stock history
             StockHistory::create([
@@ -89,6 +89,9 @@ class OrderController extends Controller
     public function getOrdersByOutlet($id)
     {
         $orders = Order::where('outlet_id', $id)->orderBy('id', 'desc')->get();
+
+        //load order items, product
+        $orders->load('items.product',);
 
         return response()->json([
             'data' => $orders,

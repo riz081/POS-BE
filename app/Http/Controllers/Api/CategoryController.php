@@ -36,4 +36,21 @@ class CategoryController extends Controller
             'data' => $categories,
         ]);
     }
+
+    //update category
+    public function updateCategory(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $category = Category::find($id);
+        $category->name = $request->name;
+        $category->save();
+
+        return response()->json([
+            'message' => 'Category updated successfully',
+            'data' => $category,
+        ]);
+    }
 }
