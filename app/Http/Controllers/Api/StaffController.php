@@ -61,6 +61,7 @@ class StaffController extends Controller
         $user->role_id = $request->role_id;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->outlet_id = $request->outlet_id;
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
