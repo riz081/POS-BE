@@ -15,9 +15,9 @@ return new class extends Migration
             //
             $table->foreignId('role_id')->constrained('roles');
             //business_id is a foreign key that references the id column on the businesses table nullable
-            $table->foreignId('business_id')->constrained('businesses')->nullable();
+            $table->foreignId('business_id')->nullable()->constrained('businesses');
             //outlet_id is a foreign key that references the id column on the outlets table nullable
-            $table->foreignId('outlet_id')->constrained('outlets')->nullable();
+            $table->foreignId('outlet_id')->nullable()->constrained('outlets');
             //phone nullable
             $table->string('phone')->nullable();
 

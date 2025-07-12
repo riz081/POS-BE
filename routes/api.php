@@ -74,3 +74,7 @@ Route::delete('/delete-business-setting/{id}', [App\Http\Controllers\Api\Busines
 
 //sales report
 Route::post('/get-daily-sales-report', [App\Http\Controllers\Api\SalesReportController::class, 'getDailySalesReport'])->middleware('auth:sanctum');
+
+Route::get('/ping', function () {
+    return response()->json(['message' => 'API connected successfully']);
+});
