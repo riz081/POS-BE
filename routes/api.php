@@ -45,10 +45,10 @@ Route::get('/get-product/{id}', [App\Http\Controllers\Api\ProductController::cla
 Route::delete('/delete-product/{id}', [App\Http\Controllers\Api\ProductController::class, 'deleteProduct'])->middleware('auth:sanctum');
 
 //stocks
-Route::post('/add-stock', [App\Http\Controllers\Api\StockController::class, 'addStock'])->middleware('auth:sanctum');
-Route::put('/update-stock/{id}', [App\Http\Controllers\Api\StockController::class, 'updateStock'])->middleware('auth:sanctum');
 Route::get('/get-stocks', [App\Http\Controllers\Api\StockController::class, 'getStocks'])->middleware('auth:sanctum');
 Route::get('/get-stock/{id}', [App\Http\Controllers\Api\StockController::class, 'getStock'])->middleware('auth:sanctum');
+Route::post('/add-stock', [App\Http\Controllers\Api\StockController::class, 'addStock'])->middleware('auth:sanctum');
+Route::put('/update-stock/{id}', [App\Http\Controllers\Api\StockController::class, 'updateStock'])->middleware('auth:sanctum');
 Route::delete('/delete-stock/{id}', [App\Http\Controllers\Api\StockController::class, 'deleteStock'])->middleware('auth:sanctum');
 
 //orders
