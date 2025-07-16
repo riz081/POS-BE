@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -42,14 +43,33 @@ class ProductController extends Controller
         ]);
 
         //if image is sent
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            // Simpan file di storage dan dapatkan path
-            $path = $image->store('public/products');
-
-            // Simpan path relatif ke database
-            $product->image = Storage::url($path);
-            $product->save();
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            try {
+                $image = $request->file('image');
+                $filename = 'product_'.$product->id.'_'.time().'.'.$image->getClientOriginalExtension();
+                
+                // Upload tanpa ACL
+                $s3Path = Storage::disk('s3')->putFileAs(
+                    'products',
+                    $image,
+                    $filename
+                    // Hapus parameter visibility
+                );
+                
+                // Dapatkan URL
+                $product->image = Storage::url($s3Path);
+                $product->save();
+                
+            } catch (\Exception $e) {
+                Log::error('S3 Upload Error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return response()->json([
+                    'error' => 'Image upload failed',
+                    'details' => $e->getMessage()
+                ], 500);
+            }
         }
 
         //outlet by business
@@ -128,7 +148,8 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             // Simpan file di storage dan dapatkan path
-            $path = $image->store('public/products');
+            // $path = $image->store('public/products');
+            $path = Storage::disk('s3')->put('products', $image, 'public');
 
             // Simpan path relatif ke database
             $product->image = Storage::url($path);
